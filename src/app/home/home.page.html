@@ -1,0 +1,95 @@
+<ion-menu contentId="main-content" *ngIf="isUserLoggedIn">
+    <ion-header>
+        <ion-toolbar>
+            <ion-item>
+                <ion-avatar slot="start">
+                    <img alt="Silhouette of a person's head" src="./assets/img/per.jpg" />
+                </ion-avatar>
+                <ion-label>Item Avatar</ion-label>
+            </ion-item>
+            <ion-title>{{ userEmail }}</ion-title>
+        </ion-toolbar>
+        <ion-list>
+            <ion-menu-toggle autoHide="false">
+                <ion-item (click)="navigateToHome()">
+                    <ion-icon name="home" slot="start"></ion-icon>
+                    Accueil
+                </ion-item>
+            </ion-menu-toggle>
+            <ion-menu-toggle autoHide="false">
+                <ion-item (click)="navigateToAjoute()">
+                    <ion-icon name="add" slot="start"></ion-icon>
+                    Ajouter Annonce
+                </ion-item>
+            </ion-menu-toggle>
+
+            <ion-menu-toggle autoHide="false">
+                <ion-item (click)="navigateToMAnnonce()">
+                    <ion-icon name="list" slot="start"></ion-icon>
+                    Mes Annonces
+                </ion-item>
+            </ion-menu-toggle>
+
+            <ion-menu-toggle autoHide="false">
+                <ion-item (click)="deconnexion()">
+                    <ion-icon name="log-out" slot="start"></ion-icon>
+                    Déconnexion
+                </ion-item>
+            </ion-menu-toggle>
+        </ion-list>
+    </ion-header>
+</ion-menu>
+
+<div class="ion-page" id="main-content">
+    <ion-header>
+        <ion-toolbar>
+            <ion-buttons slot="start">
+                <ion-menu-button></ion-menu-button>
+            </ion-buttons>
+            <ion-title>Menu</ion-title>
+            <ion-buttons slot="secondary">
+                <ion-button (click)="goToLoginPage()" *ngIf="!isUserLoggedIn">
+                    <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+                </ion-button>
+            </ion-buttons>
+        </ion-toolbar>
+    </ion-header>
+    <ion-header>
+        <ion-toolbar>
+            <ion-segment value="Voiture">
+                <ion-segment-button value="Voiture" (click)="showVoiture()">
+                    <ion-label>Voiture</ion-label>
+                </ion-segment-button>
+                <ion-segment-button value="Maison" (click)="showMaison()">
+                    <ion-label>Maison</ion-label>
+                </ion-segment-button>
+            </ion-segment>
+        </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+        <ng-container *ngIf="showVoitureContent">
+            <!-- Votre contenu "Voiture" ici -->
+        </ng-container>
+
+        <!-- Contenu de la page "Maison" -->
+        <ion-header collapse="condense" *ngIf="showMaisonContent">
+            <ion-toolbar>
+                <ion-title size="large">Accueil Maison</ion-title>
+            </ion-toolbar>
+        </ion-header>
+
+        <ng-container *ngIf="showMaisonContent">
+            <ion-card>
+                <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+                <ion-card-header>
+                    <ion-card-title>Card Title</ion-card-title>
+                    <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+                </ion-card-header>
+
+                <ion-card-content>
+                    Here's a small text description for the card content. Nothing more, nothing less.
+                </ion-card-content>
+            </ion-card>
+        </ng-container>
+    </ion-content>
+</div>

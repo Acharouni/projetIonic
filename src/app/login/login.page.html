@@ -1,0 +1,24 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            Connexion
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-item>
+        <ion-label position="floating">Adresse e-mail</ion-label>
+        <ion-input type="email" [(ngModel)]="email" name="email"></ion-input>
+    </ion-item>
+
+    <ion-item>
+        <ion-label position="floating">Mot de passe</ion-label>
+        <ion-input type="password" [(ngModel)]="password" name="password"></ion-input>
+    </ion-item>
+
+    <ion-button expand="full" (click)="login()">Se connecter</ion-button>
+
+    <p class="ion-text-center">Vous n'avez pas de compte ? <a href="/signup">Inscrivez-vous ici</a></p>
+    <p class="ion-text-center"><a href="/mot-de-passe-oublie">Mot de passe oublié ?</a></p>
+</ion-content>

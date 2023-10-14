@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "fir-ionic-bbe55": {
+      "hosting": {
+        "app": [
+          "fir-ionic-bbe55"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "fir-ionic-bbe55"
+  }
+}
