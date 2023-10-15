@@ -3,7 +3,8 @@ import {
   Auth,
   signInWithEmailAndPassword
 } from '@angular/fire/auth';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 
 
 @Component({
@@ -11,14 +12,21 @@ import { Router } from '@angular/router';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage implements OnInit {
+
+export class LoginPage{
+ 
   email: string = '';
   password: string = '';
 
 
-  constructor(private router: Router, private auth: Auth) { }
 
-  ngOnInit() {}
+  constructor(private navCtrl: NavController,private router: Router, private auth: Auth,private route: ActivatedRoute) { }
+
+  ngOnInit() {
+   this.goToHomePage;
+   this.login;
+  
+  }
 
   async login() {
     if (this.email && this.password) {
@@ -28,6 +36,7 @@ export class LoginPage implements OnInit {
           this.email,
           this.password
         );
+        console.log("curent user gff :"+this.auth.currentUser?.uid);
         console.log('Authentification réussie', userCredential);
         this.router.navigate(['/home']);
       } catch (error) {
@@ -36,6 +45,9 @@ export class LoginPage implements OnInit {
     } else {
       console.error('Veuillez remplir tous les champs.');
     }
+  }
+  async goToHomePage() {
+    this.navCtrl.navigateForward('/home');
   }
 
 }

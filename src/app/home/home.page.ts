@@ -1,24 +1,47 @@
-import { Component } from '@angular/core';
-import { Auth, signOut } from '@angular/fire/auth';
+import { Component, OnInit } from '@angular/core';
+import { Auth } from '@angular/fire/auth';
 import { Firestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { MenuController, NavController } from '@ionic/angular';
-
+import { AnnonceService } from '../services/annonce.service';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
-  userEmail: string="";
-  userName: string="";
+export class HomePage implements OnInit{
+  users: any[] | undefined;
+
+  annoncesAll : any[] = [];
+  annoncesMaisons:any[] = [];
   isUserLoggedIn = false;
-  constructor(private auth: Auth, private firestore: Firestore,private router: Router, private menu: MenuController, private navCtrl: NavController) {
-  this.loadUserData();
+  constructor(private auth: Auth, private firestore: Firestore,private router: Router, private menu: MenuController, private navCtrl: NavController, private annServ:AnnonceService) {
+
   this.iSconnect();
   }
+  ngOnInit(): void {
+    
+    let UserCh= this.auth.currentUser?.uid
+   
+    this.annServ.getallAnon().subscribe({
+  next:(data)=>{
+    for(let us in data){
+      
+      this.annServ.getAnon(us).subscribe({
+        next:(res)=>{
+          console.log(res)
+           if(res.categorie === "Voitures"){
+            this.annoncesAll.push(res)
+           }else{
+            this.annoncesMaisons.push(res)
+           }
+          
+        }
+      })
+  }}})
+  }
   iSconnect(){
-    this.auth.beforeAuthStateChanged((user) => {
+    this.auth.onAuthStateChanged((user) => {
       if (user) {
         this.isUserLoggedIn = true;
       } else {
@@ -26,36 +49,7 @@ export class HomePage {
       }
     });
   }
-  
-  loadUserData() {
-    this.auth.onAuthStateChanged((user) => {
-      if (user) {
-        // Utilisateur connecté
-        this.userName =  user.displayName || '';
-        this.userEmail = user.email || '';
-      } else {
-        // L'utilisateur n'est pas connecté
-        this.userName = 'Non connecté';
-        this.userEmail = 'Non connecté';
-      }
-    });
 
-  }
-
-  navigateToHome() {
-    this.navCtrl.navigateForward('/home');
-  }
-  navigateToAjoute() {
-    this.navCtrl.navigateForward('/ajouter-annonce');
-  }
-  navigateToMAnnonce() {
-    this.navCtrl.navigateForward('/mes-annonce');
-  }
-
-  deconnexion() {
-    this.auth.signOut().then(()=>{this.router.navigate(['/login'])})
-    return console.log('singout réussie');
-  }
   goToLoginPage() {
     this.navCtrl.navigateForward('/login');
   }

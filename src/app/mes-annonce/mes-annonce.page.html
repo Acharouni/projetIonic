@@ -1,13 +1,29 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Mes_Annonce</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Mes Annonce</ion-title>
+    </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Mes_Annonce</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+    <ion-list>
+        <ion-item *ngFor="let form of annoncesAll">
+            <ion-thumbnail slot="start">
+                <img [src]="form.image" alt="Image du formulaire">
+            </ion-thumbnail>
+            <ion-label>
+                <h2>{{ form.title }}</h2>
+                <p>Catégorie: {{ form.categorie }}</p>
+                <p>Description: {{ form.description }}</p>
+                <p>Prix: {{ form.prix }}</p>
+
+                <div class="ion-text-end ion-margin-vertical">
+                    <ion-button (click)="deletAnnonce(form.identifiant)" color=" danger ">Effacer</ion-button>
+                </div>
+
+            </ion-label>
+        </ion-item>
+    </ion-list>
 </ion-content>
